@@ -1,5 +1,6 @@
 .App {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .App-logo {
@@ -35,4 +36,27 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.resulstwrapper {
+  display: flex;
+  justify-content: space-evenly;
+  width: 75%;
+  margin: auto;
+  outline: 1px solid red;
+  min-height: 300px;
+}
+
+.resulstwrapper .resulstwrapper__left {
+  outline: 1px solid orangered;
+  width: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  text-transform: capitalize;
+}
+.resulstwrapper .resulstwrapper__right {
+  outline: 1px solid yellowgreen;
+  width: 45%;
 }
