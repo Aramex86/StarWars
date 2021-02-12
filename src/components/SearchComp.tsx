@@ -11,6 +11,7 @@ import {
 } from "../types/types";
 import axios from "axios";
 import SearchResults from "./SearchResults";
+import SelectedItem from "./SelectedItem";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
 
 const initialState = {
   films: [] as Array<FilmsType>,
@@ -64,12 +66,10 @@ const reducer = (state: initialStateType = initialState, action: any) => {
 const SearchComp = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [values, setValue] = useState<string>("han solo");
-
-  console.log(state);
+  const [values, setValue] = useState<string>("");
 
   useEffect(() => {
-    if (values.length >= 3) {
+    if (values.length > 3) {
       axios
         .get(`https://swapi.dev/api/films/?serarch=${values}`)
         .then((res) => dispatch({ type: "Films", films: res.data.results }))
@@ -118,8 +118,9 @@ const SearchComp = () => {
           size="small"
           onChange={handaleChange}
           inputProps={{
-            style: { textTransform: "capitalize", fontWeight: "bolder" },
+            style: { textTransform: "capitalize", fontWeight: "bolder",fontSize:'1.5rem' },
           }}
+          InputLabelProps={{style:{fontSize:'1.5rem'}}}
         />
       </form>
       <SearchResults
@@ -132,6 +133,12 @@ const SearchComp = () => {
         vehicles={state.vehicles}
         state={state}
       />
+      <SelectedItem  films={state.films}
+        people={state.people}
+        planets={state.planets}
+        species={state.species}
+        starships={state.starships}
+        vehicles={state.vehicles}/>
     </div>
   );
 };

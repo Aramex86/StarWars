@@ -1,62 +1,57 @@
-.App {
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-size: 1.5rem;
+  box-sizing: border-box;
   display: flex;
   justify-content: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+html {
+  font-size: 62.5%;
 }
 
 .resulstwrapper {
   display: flex;
   justify-content: space-evenly;
-  width: 75%;
+  width: 96%;
   margin: auto;
-  outline: 1px solid red;
   min-height: 300px;
 }
 
 .resulstwrapper .resulstwrapper__left {
-  outline: 1px solid orangered;
-  width: 45%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bolder;
+  width: 30%;
   text-transform: capitalize;
+  font-style: italic;
+  font-size: 1.9rem;
 }
 .resulstwrapper .resulstwrapper__right {
-  outline: 1px solid yellowgreen;
-  width: 45%;
+  width: 70%;
+}
+
+.categorylist {
+  display: flex;
+  justify-content: flex-start;
+}
+.categorylist__item {
+  list-style: none;
+  padding: .5rem;
+  display: flex;
+  align-items: center;
+}
+
+.categorylist__item svg{
+  margin-right: 5px;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.objectwrap{
+  outline: 1px solid gray;
 }
