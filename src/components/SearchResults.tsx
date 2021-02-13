@@ -24,6 +24,7 @@ type PropsType = {
   starships: Array<StarshipsType>;
   vehicles: Array<VehiclesType>;
   state: any;
+  handleInfo: () => void;
 };
 const SearchResults: FC<PropsType> = ({
   searchValue,
@@ -34,16 +35,18 @@ const SearchResults: FC<PropsType> = ({
   starships,
   vehicles,
   state,
+  handleInfo,
 }) => {
   const categoriesNames = () => {
     return Object.keys(state).slice(0, 5);
   };
   categoriesNames();
 
-  console.log(state);
   return (
     <div className="resulstwrapper">
-      <div className="resulstwrapper__left">{searchValue}</div>
+      <div className="resulstwrapper__left" onClick={handleInfo}>
+        {searchValue}
+      </div>
       <div className="resulstwrapper__right">
         <ul className="categorylist">
           {films.length !== 0 && searchValue.length > 3 ? (
@@ -65,7 +68,7 @@ const SearchResults: FC<PropsType> = ({
 
           {planets.length !== 0 && searchValue.length > 3 ? (
             <li className="categorylist__item">
-            <BiPlanet/>  {categoriesNames().slice(2, 3)}
+              <BiPlanet /> {categoriesNames().slice(2, 3)}
             </li>
           ) : (
             ""
@@ -73,7 +76,7 @@ const SearchResults: FC<PropsType> = ({
 
           {species.length !== 0 && searchValue.length > 3 ? (
             <li className="categorylist__item">
-            <GiSeaCreature/>  {categoriesNames().slice(3, 4)}
+              <GiSeaCreature /> {categoriesNames().slice(3, 4)}
             </li>
           ) : (
             ""
@@ -81,7 +84,7 @@ const SearchResults: FC<PropsType> = ({
 
           {starships.length !== 0 && searchValue.length > 3 ? (
             <li className="categorylist__item">
-            <FaSpaceShuttle/>  {categoriesNames().slice(4, 5)}
+              <FaSpaceShuttle /> {categoriesNames().slice(4, 5)}
             </li>
           ) : (
             ""
@@ -89,7 +92,7 @@ const SearchResults: FC<PropsType> = ({
 
           {vehicles.length !== 0 && searchValue.length > 3 ? (
             <li className="categorylist__item">
-             <GiSpaceship/> {categoriesNames().slice(5, 6)}
+              <GiSpaceship /> {categoriesNames().slice(5, 6)}
             </li>
           ) : (
             ""

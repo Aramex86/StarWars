@@ -17,13 +17,17 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       "& .MuiTextField-root": {
-        margin: theme.spacing(1),
-        width: 600,
+        margin: theme.spacing(0),
+        width: 100 + "%",
+      },
+      marginBottom: 25,
+      marginTop:150,
+      "& .MuiInputBase-root": {
+        fontSize: "1.5rem",
       },
     },
   })
 );
-
 
 const initialState = {
   films: [] as Array<FilmsType>,
@@ -67,6 +71,7 @@ const SearchComp = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(reducer, initialState);
   const [values, setValue] = useState<string>("");
+  const [info, setInfo] = useState(false);
 
   useEffect(() => {
     if (values.length > 3) {
@@ -105,40 +110,62 @@ const SearchComp = () => {
     setValue(event.currentTarget.value);
   };
 
+  const handleInfo = () => {
+    setInfo(true);
+  };
+
+  const handleClose = () => {
+    setValue("");
+    setInfo(false);
+  };
+
   return (
-    <div>
-      <h1>Search comp</h1>
+    <div className="searchwrap">
       <form className={classes.root} noValidate autoComplete="off">
         <TextField
           label="Search for Star Heroes..."
           id="outlined-size-small"
-          defaultValue={values}
+          value={values}
           placeholder="Search for Star Heroes..."
           variant="outlined"
           size="small"
           onChange={handaleChange}
           inputProps={{
-            style: { textTransform: "capitalize", fontWeight: "bolder",fontSize:'1.5rem' },
+            style: {
+              textTransform: "capitalize",
+              fontWeight: "bolder",
+              fontSize: "1.5rem",
+              width: "70%",
+              margin: 0,
+              
+            },
           }}
-          InputLabelProps={{style:{fontSize:'1.5rem'}}}
+          InputLabelProps={{ style: { fontSize: "1.5rem" } }}
         />
       </form>
-      <SearchResults
-        searchValue={values}
-        films={state.films}
-        people={state.people}
-        planets={state.planets}
-        species={state.species}
-        starships={state.starships}
-        vehicles={state.vehicles}
-        state={state}
-      />
-      <SelectedItem  films={state.films}
-        people={state.people}
-        planets={state.planets}
-        species={state.species}
-        starships={state.starships}
-        vehicles={state.vehicles}/>
+      {info ? (
+        <SelectedItem
+          films={state.films}
+          people={state.people}
+          planets={state.planets}
+          species={state.species}
+          starships={state.starships}
+          vehicles={state.vehicles}
+          handleClose={handleClose}
+        />
+      ) : (
+        <SearchResults
+          searchValue={values}
+          films={state.films}
+          people={state.people}
+          planets={state.planets}
+          species={state.species}
+          starships={state.starships}
+          vehicles={state.vehicles}
+          state={state}
+          handleInfo={handleInfo}
+        />
+      )}
     </div>
   );
 };

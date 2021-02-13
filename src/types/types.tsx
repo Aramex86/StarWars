@@ -8,13 +8,13 @@ export type PeopleType = {
   birth_year: string;
   gender: string;
   homeworld: string;
-  films: string[];
-  species: any[];
+  films?: string[];
+  species?: any[];
   vehicles: string[];
-  starships: string[];
-  created: Date;
-  edited: Date;
-  url: string;
+  starships?: string[];
+  created?: Date;
+  edited?: Date;
+  url?: string;
 };
 export type FilmsType = {
   title: string;
@@ -25,12 +25,12 @@ export type FilmsType = {
   release_date: Date;
   characters: string[];
   planets: string[];
-  starships: string[];
+  starships?: string[];
   vehicles: string[];
-  species: string[];
-  created: Date;
-  edited: Date;
-  url: string;
+  species?: string[];
+  created?: Date;
+  edited?: Date;
+  url?: string;
 };
 
 export type StarshipsType = {
@@ -48,10 +48,10 @@ export type StarshipsType = {
   MGLT: string;
   starship_class: string;
   pilots: any[];
-  films: string[];
-  created: Date;
-  edited: Date;
-  url: string;
+  films?: string[];
+  created?: Date;
+  edited?: Date;
+  url?: string;
 };
 
 export type VehiclesType = {
@@ -67,10 +67,10 @@ export type VehiclesType = {
   consumables: string;
   vehicle_class: string;
   pilots: string[];
-  films: string[];
-  created: Date;
-  edited: Date;
-  url: string;
+  films?: string[];
+  created?: Date;
+  edited?: Date;
+  url?: string;
 };
 
 export type SpeciesType = {
@@ -85,10 +85,10 @@ export type SpeciesType = {
   homeworld: string;
   language: string;
   people: string[];
-  films: string[];
-  created: Date;
-  edited: Date;
-  url: string;
+  films?: string[];
+  created?: Date;
+  edited?: Date;
+  url?: string;
 };
 
 export type PlanetsType = {
@@ -102,8 +102,8 @@ export type PlanetsType = {
   surface_water: string;
   population: string;
   residents: string[];
-  films: string[];
-  created: Date;
-  edited: Date;
-  url: string;
+  films?: string[];
+  created?: Date;
+  edited?: Date;
+  url?: string;
 };
