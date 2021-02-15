@@ -25,6 +25,8 @@ type PropsType = {
   vehicles: Array<VehiclesType>;
   state: any;
   handleInfo: () => void;
+  showResult: boolean;
+  error: string;
 };
 const SearchResults: FC<PropsType> = ({
   searchValue,
@@ -36,17 +38,24 @@ const SearchResults: FC<PropsType> = ({
   vehicles,
   state,
   handleInfo,
+  showResult,
+  error,
 }) => {
   const categoriesNames = () => {
     return Object.keys(state).slice(0, 5);
   };
   categoriesNames();
-
   return (
-    <div className="resulstwrapper">
-      <div className="resulstwrapper__left" onClick={handleInfo}>
-        {searchValue}
-      </div>
+    <div
+      className={`${showResult ? "resulstwrapper" : "resulstwrapper--hide"}`}
+    >
+      <button
+        className="resulstwrapper__left"
+        onClick={handleInfo}
+        disabled={error ? true : false}
+      >
+        {error ? <span className="error">{error}</span> : searchValue}
+      </button>
       <div className="resulstwrapper__right">
         <ul className="categorylist">
           {films.length !== 0 && searchValue.length > 3 ? (

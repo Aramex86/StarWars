@@ -17,6 +17,12 @@ html {
   font-size: 62.5%;
 }
 
+:root {
+  --balck: #000;
+  --white: #ffffff;
+  --whiteTrans: #ffffffe3;
+}
+
 #root {
   width: 100%;
 }
@@ -25,29 +31,59 @@ html {
   width: 100%;
   display: flex;
   justify-content: center;
+  background: url(../src/assets/bg.png) center center/cover no-repeat;
+  min-height: 100vh;
 }
 
 .searchwrap {
   width: 60%;
   padding: 0 1rem;
+  position: relative;
+}
+.searchwrap img {
+  width: 100%;
+}
+@media screen and (width: 600px) {
+  .searchwrap {
+    width: 90%;
+  }
+}
+@media screen and (width: 360px) {
+  .searchwrap {
+    width: 90%;
+  }
 }
 
 .resulstwrapper {
   display: flex;
   justify-content: space-evenly;
   margin: auto;
-  padding: 0 2rem;
+  padding: 0.5rem 2rem;
+  background: #dededecf;
+  position: relative;
+  top: -26px;
+  border-radius: 0 0px 5px 5px;
+}
+.resulstwrapper--hide {
+  display: none;
 }
 
 .resulstwrapper .resulstwrapper__left {
-  width: 25%;
+  color: var(--balck);
+  width: 50%;
   text-transform: capitalize;
   font-style: italic;
   font-size: 1.9rem;
   cursor: pointer;
+  border: transparent;
+  background: transparent;
+  outline: none;
 }
 .resulstwrapper .resulstwrapper__right {
-  width: 90%;
+  width: 60%;
+  color: var(--balck);
+  text-transform: capitalize;
+  font-weight: bold;
 }
 
 .categorylist {
@@ -74,11 +110,11 @@ html {
 }
 
 .objectwrap__heading {
-  border-bottom: 1px solid gray;
-  margin-bottom: 25px;
+  border-bottom: 1px solid #80808033;
   padding: 1rem 1rem;
   display: flex;
   justify-content: space-between;
+  background: var(--whiteTrans);
 }
 
 .objectwrap__btn {
@@ -86,4 +122,10 @@ html {
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+.error {
+  color: #672323;
+  font-style: normal;
+  font-weight: bold;
 }

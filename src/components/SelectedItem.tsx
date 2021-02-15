@@ -16,6 +16,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { FaRegWindowClose } from "react-icons/fa";
 import { useEffect } from "react";
 import axios from "axios";
+import { TableHead } from "@material-ui/core";
 
 type PropsType = {
   films: Array<FilmsType>;
@@ -65,27 +66,10 @@ type ShipType = {
   url: string;
 };
 
-type Species = {
-  name: string;
-  classification: string;
-  designation: string;
-  average_height: string;
-  skin_colors: string;
-  hair_colors: string;
-  eye_colors: string;
-  average_lifespan: string;
-  homeworld: string;
-  language: string;
-  people: string[];
-  films: string[];
-  created: Date;
-  edited: Date;
-  url: string;
-};
-
 const useStyles = makeStyles({
   table: {
     minWidth: 500,
+    background: "#ffffffe3",
   },
   tableCell: {
     fontSize: "1.6rem",
@@ -111,25 +95,42 @@ const SelectedItem: FC<PropsType> = ({
   const [specie] = species;
   const [starship] = starships;
   const [vehicle] = vehicles;
+  const allObject = {
+    ...person,
+    ...planet,
+    ...specie,
+    ...starship,
+    ...vehicle,
+  };
   const regex = /\d+/g;
-  const homeworld = person.homeworld;
-  const homeworldMatch = Number(homeworld.match(regex));
-  const personStarship = person.starships;
+  const homeworld = allObject.homeworld ? person.homeworld : null;
+  const homeworldMatch = Number(homeworld?.match(regex));
+  const personStarship = allObject.starships ? person.starships : null;
   const starshipsMatch = personStarship?.map((s) => Number(s.match(regex)));
-  const race = species.map(r=> Number(r.url?.match(regex)));
+  const race = species.map((r) => Number(r.url?.match(regex)));
 
+  allObject.homeworld = home ? home.name : "";
+
+  delete allObject.url;
+  delete allObject.films;
+  delete allObject.created;
+  delete allObject.edited;
+  delete allObject.starships;
+  delete allObject.species;
   useEffect(() => {
     const fetchPlanet = async () => {
-      const res = await axios
-        .get(`http://swapi.dev/api/planets/${homeworldMatch}/`)
-        .then((response) => {
-          return response.data;
-        });
-      setHome(res);
+      if (people.length > 0) {
+        const res = await axios
+          .get(`http://swapi.dev/api/planets/${homeworldMatch}`)
+          .then((response) => {
+            return response.data;
+          });
+        setHome(res);
+      }
     };
     const fetchStarship = async () => {
       const res = await axios
-        .get(`http://swapi.dev/api/starships/${starshipsMatch}/`)
+        .get(`http://swapi.dev/api/starships/${starshipsMatch}`)
         .then((response) => {
           return response.data;
         });
@@ -137,7 +138,7 @@ const SelectedItem: FC<PropsType> = ({
     };
     const fetchSpecies = async () => {
       const res = await axios
-        .get(`http://swapi.dev/api/species/${race}/`)
+        .get(`http://swapi.dev/api/species/${race}`)
         .then((response) => {
           return response.data;
         });
@@ -146,39 +147,21 @@ const SelectedItem: FC<PropsType> = ({
     fetchPlanet();
     fetchStarship();
     fetchSpecies();
-  }, []);
+  }, [homeworldMatch,people.length,race,starshipsMatch]);
 
-  console.log(races);
-  
-  
-  const allObject = {
-    ...person,
-    ...planet,
-    ...specie,
-    ...starship,
-    ...vehicle,
-  };
-
-  delete allObject.url;
-  delete allObject.films;
-  delete allObject.created;
-  delete allObject.edited;
-  delete allObject.starships;
-  delete allObject.species;
-
-  allObject.homeworld = home ? home.name : "";
-
-  const x = Object.entries(allObject).map(([key, value]) => {
+  const keyValue = Object.entries(allObject).map(([key, value]) => {
     const keyToCapitalize = key.charAt(0).toUpperCase() + key.slice(1);
     const removeUnderScore = keyToCapitalize.replace("_", " ");
     return (
-      <TableRow key={key}>
-        <TableCell className={classes.tableCell}>{removeUnderScore}:</TableCell>
-        <TableCell className={classes.tableCell}>
-          {" "}
-          {value?.toString()}
-        </TableCell>
-      </TableRow>
+        <TableRow key={key}>
+          <TableCell className={classes.tableCell}>
+            {removeUnderScore}:
+          </TableCell>
+          <TableCell className={classes.tableCell}>
+            {" "}
+            {value?.toString()}
+          </TableCell>
+        </TableRow>
     );
   });
 
@@ -191,28 +174,33 @@ const SelectedItem: FC<PropsType> = ({
         </button>
       </div>
       <TableContainer>
-        <Table>
+        <Table className={classes.table}>
+          <TableHead></TableHead>
           <TableBody>
-            {x}
+            {keyValue}
+            <TableRow>
             <TableCell className={classes.tableCell}>Films:</TableCell>
             <TableCell className={classes.tableCell}>
               {films.map((f) => (
-                <span key={f.episode_id}>{`${f.title}`} , </span>
+                <span key={f.episode_id}>{`${f.title}`}, </span>
               ))}
             </TableCell>
-          </TableBody>
-          <TableBody>
+            </TableRow>
             <TableRow>
               <TableCell className={classes.tableCell}>Starships:</TableCell>
               <TableCell className={classes.tableCell}>{ship?.model}</TableCell>
-            </TableRow>
-          </TableBody>
-          <TableBody>
-            <TableRow>
-              <TableCell className={classes.tableCell}>Species:</TableCell>
-              <TableCell className={classes.tableCell}>{races?.name}</TableCell>
-            </TableRow>
-          </TableBody>
+              </TableRow>
+              {race.length === 0 ? (
+               null
+                ) : (
+                  <TableRow>
+                  <TableCell className={classes.tableCell}>Species:</TableCell>
+                  <TableCell className={classes.tableCell}>
+                    {races?.name}
+                  </TableCell>
+                </TableRow>
+              )}
+              </TableBody>
         </Table>
       </TableContainer>
     </div>
